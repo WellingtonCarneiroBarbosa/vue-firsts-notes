@@ -1,31 +1,26 @@
 <template>
-    <div class="flex w-screen h-screen text-gray-700">
-      <div class="flex flex-col flex-shrink-0 w-4/12 border-r border-gray-300 bg-gray-100">
-        <!-- sidebar -->
-        <ul class="ml-2" v-for="(note, index) in allNotes" :key="index">
+    <div class="flex w-screen h-screen text-gray-700 m-2 mt-0">
+      <div class="flex flex-col flex-grow">
+        <ul class="mt-2" v-for="(comment, index) in allComments" :key="index">
           <li class="mb-2 mt-2">
-            <p>Autor: {{ note.author }}</p>
-            <p>Nota: {{ note.note }}</p>
-            <a href="#" class="mt-1 italic" v-on:click.prevent="deleteNote(index)">Delete</a>
+            <p>Autor: {{ comment.author }}</p>
+            <p>Nota: {{ comment.comment }}</p>
+            <a href="#" class="mt-1 text-red-500 italic" v-on:click.prevent="deleteComment(index)">Delete</a>
           </li>
 
           <hr>
         </ul>
 
-      </div>
-
-      <div class="flex flex-col flex-grow">
-        <!-- Content -->
-        <div class="flex flex-col flex-grow overflow-auto m-2">
-          <label class="mb-2 text-gray-700" for="note">Type some note...</label>
+        <div class="flex flex-col flex-grow overflow-auto mt-4">
+          <label class="mb-2 text-gray-700" for="comment">Type some comment...</label>
           <textarea 
-            v-model="note"
-            v-on:keyup.enter="saveNote"
-            id="note"
+            v-model="comment"
+            v-on:keyup.enter="saveComment"
+            id="comment"
             class="border border-gray-300 rounded focus:outline-none"
             />
 
-            <button class="bg-gray-400 rounded p-2 mt-2" v-on:click="saveNote">Salvar Nota</button>
+            <button class="bg-gray-400 rounded p-2 mt-2" v-on:click="saveComment">Save Comment</button>
         </div>
       </div>
   </div>
@@ -41,36 +36,36 @@ export default {
 
   data() {
     return {
-      note: '',
-      notes: []
+      comment: '',
+      comments: []
     }
   },
 
   methods: {
-    saveNote() {
-      if(this.note.trim() != '') {
+    saveComment() {
+      if(this.comment.trim() != '') {
 
-        this.notes.push({
-          note: this.note,
+        this.comments.push({
+          comment: this.comment,
           author: ''
         });
 
-        this.note = ''
+        this.comment = ''
       }
     },
 
-    deleteNote(id) {
-      if(confirm('Are you sure you want to delete this note?')) {
-        this.notes.splice(id, 1);
+    deleteComment(id) {
+      if(confirm('Are you sure you want to delete this comment?')) {
+        this.comments.splice(id, 1);
       }
     }
   },
 
   computed: {
-    allNotes() {
-      return this.notes.map(note => ({
-        ...note,
-        author: note.author.trim() === '' ? 'Anônimo' : note.author
+    allComments() {
+      return this.comments.map(comment => ({
+        ...comment,
+        author: comment.author.trim() === '' ? 'Anônimo' : comment.author
       }));
     }
   },
