@@ -20,6 +20,7 @@
           <label class="mb-2 text-gray-700" for="note">Type some note...</label>
           <textarea 
             v-model="note"
+            v-on:keyup.enter="saveNote"
             id="note"
             class="border border-gray-300 rounded focus:outline-none"
             />
@@ -49,14 +50,12 @@ export default {
     saveNote() {
       if(this.note.trim() != '') {
 
-        if(confirm('Are you sure you want to save this note?')) {
-          this.notes.push({
-            note: this.note,
-            author: ''
-          });
+        this.notes.push({
+          note: this.note,
+          author: ''
+        });
 
-          this.note = ''
-        }
+        this.note = ''
       }
     },
 
