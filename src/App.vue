@@ -2,9 +2,10 @@
     <div class="flex w-screen h-screen text-gray-700">
       <div class="flex flex-col flex-shrink-0 w-64 border-r border-gray-300 bg-gray-100">
         <!-- sidebar -->
-        <ul v-for="(note, index) in allNotes" :key="index">
+        <ul class="ml-2" v-for="(note, index) in allNotes" :key="index">
           <li>
             <p>{{ note.note }}</p>
+            <a href="#" class="mt-1 italic" v-on:click.prevent="deleteNote(index)">Delete</a>
           </li>
         </ul>
 
@@ -53,6 +54,12 @@ export default {
           this.note = ''
         }
       }
+    },
+
+    deleteNote(id) {
+      if(confirm('Are you sure you want to delete this note?')) {
+        this.notes.splice(id, 1);
+      }
     }
   },
 
@@ -61,11 +68,11 @@ export default {
       let notes = this.notes;
 
       // check empty array
-      if(notes.length === 0) {
-        return [{
-          note: 'Add some note your son of a bitch'
-        }];
-      }
+      // if(notes.length === 0) {
+      //   return [{
+      //     note: 'Add some note your son of a bitch'
+      //   }];
+      // }
 
       return notes;
     }
