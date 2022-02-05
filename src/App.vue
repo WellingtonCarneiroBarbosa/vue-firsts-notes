@@ -32,10 +32,15 @@ export default {
 
   mounted() {
     this.editor = new Editor({
-      content: '<p>I’m running Tiptap with Vue.js. 🎉</p>',
+      content: '<h3>Type something...</h3>',
       extensions: [
         StarterKit,
       ],
+      editorProps: {
+        attributes: {
+          class: "prose my-6 mx-auto focus:outline-none"
+        }
+      }
     })
   },
 
