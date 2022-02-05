@@ -3,10 +3,13 @@
       <div class="flex flex-col flex-shrink-0 w-64 border-r border-gray-300 bg-gray-100">
         <!-- sidebar -->
         <ul class="ml-2" v-for="(note, index) in allNotes" :key="index">
-          <li>
-            <p>{{ note.note }}</p>
+          <li class="mb-2 mt-2">
+            <p>Autor: {{ note.author }}</p>
+            <p>Nota: {{ note.note }}</p>
             <a href="#" class="mt-1 italic" v-on:click.prevent="deleteNote(index)">Delete</a>
           </li>
+
+          <hr>
         </ul>
 
       </div>
@@ -35,7 +38,7 @@ export default {
     //
   },
 
-  data: function () {
+  data() {
     return {
       note: '',
       notes: []
@@ -48,7 +51,8 @@ export default {
 
         if(confirm('Are you sure you want to save this note?')) {
           this.notes.push({
-            note: this.note
+            note: this.note,
+            author: ''
           });
 
           this.note = ''
@@ -65,19 +69,15 @@ export default {
 
   computed: {
     allNotes() {
-      let notes = this.notes;
-
-      // check empty array
-      // if(notes.length === 0) {
-      //   return [{
-      //     note: 'Add some note your son of a bitch'
-      //   }];
-      // }
-
-      return notes;
+      return this.notes.map(note => ({
+        ...note,
+        author: note.author.trim() === '' ? 'Anônimo' : note.author
+      }));
     }
+  },
+
+  watch: {
+    //
   }
-
-
 }
 </script>
